@@ -41,4 +41,4 @@ const port = process.env.PORT || 3000;
 
 app.listen(port);
 
-console.log(`Audience Service Host listening on ${port}`);
+console.log(`Publisher Host listening on ${port}`);

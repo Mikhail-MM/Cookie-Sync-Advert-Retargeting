@@ -22,7 +22,6 @@ app.use('/*', (req, res, next) => {
 			console.log("Check Origin: ", req.headers['origin'])
 			console.log("Logging Cookies: ", req.cookies)
 			if (!req.cookies['partner_1_tracking_id']) {
-				console.log('Processed Request - User Does Not Have Cookie.')
 				const uniqueID = uuidv4();
 				res.setHeader('Set-Cookie', [`partner_1_tracking_id=${uniqueID}`]);
 			}
@@ -30,22 +29,12 @@ app.use('/*', (req, res, next) => {
 });
 
 app.get('/track', (req, res, next) => {
-	console.log("Attaching Pixel Metadata to Request Body.")
-		console.log("Preparing to pipe request to https://cookie-sync-mainframe.herokuapp.com")
-		console.log(req.cookies.partner_1_tracking_id)
 		req.headers['x-audience-tracking-id'] = req.query.audience_tracking_id;
 		req.headers['x-partner-1-tracking-id'] = req.cookies.partner_1_tracking_id;
 		req.headers['x-contentfocus'] = req.query.contentFocus;
 		req.headers['x-original-ip'] = (req.headers['x-forwarded-for']) ? req.headers['x-forwarded-for'].split(',')[0] : req.ip
-		console.log("Logging Headers: ", req.headers)
 		req.pipe(request.get('https://cookie-sync-mainframe.herokuapp.com/partner-sync')
-			.on('response', (response) => {
-				console.log("Piped Response Received")
-				console.log(" ")
-				console.log("Logging piped response headers: ", response.headers)
-				console.log()
-				
-			})).pipe(res)
+			.on('response', (response) => { })).pipe(res)
 });
 
 app.get('/bidding', (req, res, next) => {
@@ -55,11 +44,7 @@ app.get('/bidding', (req, res, next) => {
 	})
 })
 app.get('/adwork', async (req, res, next) => {
-	console.log("Building Advertisment")
-	console.log("")
-	console.log("WE SHOULD HAVE BOTH OF THESE:", req.query['mainframe-tracking-id'], req.cookies.partner_1_tracking_id)
 	if (req.query['mainframe-tracking-id'] && req.cookies.partner_1_tracking_id) {
-		console.log("Linking mainframe tracking cookie and partner 1 tracker")
 		req.headers['x-mainframe-tracking-id'] = req.query['mainframe-tracking-id']
 		req.headers['x-partner-1-tracking-id'] = req.cookies.partner_1_tracking_id
 			const options = {
@@ -70,17 +55,13 @@ app.get('/adwork', async (req, res, next) => {
 				}
 			}
 			const mainframeLink = await rp(options)
-			console.log(mainframeLink)
 	}
-	req.pipe(request.get('https://cookie-sync-mainframe.herokuapp.com/adworks').on('response', (response) => {
-		console.log("Response Received.")
-	})).pipe(res)
+	req.pipe(request.get('https://cookie-sync-mainframe.herokuapp.com/adworks').on('response', (response) => {})).pipe(res)
 })
 
 app.use('/partnerAd', serveStatic(path.join(__dirname, '/ads')))
 
 app.get('*', (req, res) => {
-	console.log("Catch-All Handler")
 	res.status(200).send("All Clear Chief.")
 });
 
@@ -95,4 +76,4 @@ const port = process.env.PORT || 7000;
 
 app.listen(port);
 
-console.log(`Audience Service Host listening on ${port}`);
+console.log(`Partner 1 Host listening on ${port}`);

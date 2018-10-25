@@ -1,0 +1,17 @@
+{
+  "name": "cookie-sync-mainframe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.6",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "uuid": "^3.3.2"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

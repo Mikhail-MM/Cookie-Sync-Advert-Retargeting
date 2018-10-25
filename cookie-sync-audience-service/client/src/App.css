@@ -1,0 +1,58 @@
+img { object-fit: cover; height: 100%; width: 100%;}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.responsive-flex {
+	display: flex;
+  width: auto;
+  height: auto;
+  justify-content: space-around;
+	align-items: center;
+}
+.interest-window {
+  box-sizing: border-box;
+  position: relative;
+  margin: 5px;
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  border: 1px solid white;
+  transition: border 0.2s ease;
+}
+.interest-window:hover {
+  border: 3px solid red;
+  cursor: pointer;
+}
+.interest-image {
+  border-radius: 5px;
+}
+
+.active-interest {
+  border: 6px solid red;
+}
+
+.active-interest:hover {
+  border: 6px solid red;
+}
